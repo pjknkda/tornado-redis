@@ -1,7 +1,7 @@
 Tornado-Redis
 =============
 
-[![Build Status](https://secure.travis-ci.org/leporo/tornado-redis.png)](https://travis-ci.org/leporo/tornado-redis)
+[![Build Status](https://secure.travis-ci.org/pjknkda/tornado-redis.png)](https://travis-ci.org/pjknkda/tornado-redis)
 
 Asynchronous [Redis](http://redis.io/) client for the [Tornado Web Server](http://tornadoweb.org/).
 
@@ -40,8 +40,8 @@ or
     easy_install install tornado-redis
 
 To build and install the tornado-redis client library from source, clone the
-git://github.com/leporo/tornado-redis.git repository or download the archive
-from the [download page](https://github.com/leporo/tornado-redis/downloads)
+git://github.com/pjknkda/tornado-redis.git repository or download the archive
+from the [download page](https://github.com/pjknkda/tornado-redis/downloads)
 and extract it into the separate directory.
 Then execute the following commands in the source directory:
 
@@ -60,13 +60,11 @@ import tornado.gen
 ...
 
 c = tornadoredis.Client()
-c.connect()
 
 ...
 
 class MainHandler(tornado.web.RequestHandler):
-    @tornado.web.asynchronous
-    @tornado.gen.engine
+    @tornado.gen.coroutine
     def get(self):
         foo = yield tornado.gen.Task(c.get, 'foo')
         bar = yield tornado.gen.Task(c.get, 'bar')
@@ -187,8 +185,7 @@ CONNECTION_POOL = tornadoredis.ConnectionPool(max_connections=500,
                                               wait_for_available=True)
 # ...
 class MainHandler(tornado.web.RequestHandler):
-    @tornado.web.asynchronous
-    @tornado.gen.engine
+    @tornado.gen.coroutine
     def get(self):
         c = tornadoredis.Client(connection_pool=CONNECTION_POOL)
         info = yield tornado.gen.Task(c.info)
@@ -202,7 +199,7 @@ Note that you have to add a `disconnect` method call
 at the end of the code block using the Client instance to release the
 pooled connection (it's to be fixed it future library releases).
 
-See the [connection pool demo](https://github.com/leporo/tornado-redis/tree/master/demos/connection_pool)
+See the [connection pool demo](https://github.com/pjknkda/tornado-redis/tree/master/demos/connection_pool)
 for an example of the 'connection pool' feature usage.
 
 Note that connection pooling feature has multiple drawbacks and may affect
@@ -217,7 +214,7 @@ Pub/Sub operations.
 Demos
 -----
 
-Check the [Demos folder](https://github.com/leporo/tornado-redis/tree/master/demos)
+Check the [Demos folder](https://github.com/pjknkda/tornado-redis/tree/master/demos)
 for tornado-redis usage examples.
 
 Here is the list of demo applications available from this repository:
