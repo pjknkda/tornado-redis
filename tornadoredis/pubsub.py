@@ -18,6 +18,7 @@ class BaseSubscriber(object):
     Override the on_message method or use the SockJSPubSub or SocketIOPubSub
     class in your application.
     """
+
     def __init__(self, tornado_redis_client):
         self.redis = tornado_redis_client
         self.subscribers = defaultdict(Counter)
@@ -136,6 +137,7 @@ class SockJSSubscriber(BaseSubscriber):
 
     The on_message handler utilizes the SockJSConnection.broadcast method.
     """
+
     def on_message(self, msg):
         if not msg:
             return
@@ -157,6 +159,7 @@ class SocketIOSubscriber(BaseSubscriber):
     Use this class to send messages from the redis channel directly to
     subscribers via SocketIO connection (thanks to Ofir Herzas)
     """
+
     def on_message(self, msg):
         if not msg:
             return

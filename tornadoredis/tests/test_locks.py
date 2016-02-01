@@ -3,6 +3,7 @@ from .redistest import RedisTestCase, async_test
 
 
 class LocksTestCase(RedisTestCase):
+
     @async_test
     @engine
     def test_locks(self):

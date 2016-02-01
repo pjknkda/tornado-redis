@@ -46,6 +46,7 @@ class AsyncPooledIncr(AsyncIncr):
 
 
 class AsyncMset(tornado.web.RequestHandler):
+
     @tornado.web.asynchronous
     @tornado.gen.engine
     def get(self):

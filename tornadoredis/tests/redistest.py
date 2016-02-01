@@ -44,6 +44,7 @@ class TestRedisClient(tornadoredis.Client):
 
 if sys.version_info < (2, 7):
     _MAX_LENGTH = 80
+
     def safe_repr(obj, short=False):
         try:
             result = repr(obj)

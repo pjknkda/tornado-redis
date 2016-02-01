@@ -17,6 +17,7 @@ except AttributeError:
 
 
 class MiscTestCase(RedisTestCase):
+
     @async_test
     @gen.engine
     def test_response_error(self):

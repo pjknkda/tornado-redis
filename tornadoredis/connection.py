@@ -18,6 +18,7 @@ else:
 
 
 class Connection(object):
+
     def __init__(self, host='localhost', port=6379, unix_socket_path=None,
                  event_handler_proxy=None, stop_after=None, io_loop=None):
         self.host = host
@@ -179,6 +180,7 @@ class ConnectionPool(object):
                              has been reached.
         **connection_kwargs
     """
+
     def __init__(self, max_connections=None, wait_for_available=False,
                  **connection_kwargs):
         self.connection_kwargs = connection_kwargs
@@ -260,6 +262,7 @@ class ConnectionProxy(object):
     """
     A stub object to replace a client's connection until one is available.
     """
+
     def __init__(self, pool=None, client_proxy=None, connected=True):
         self.client = client_proxy
         self._pool = weakref.ref(pool)

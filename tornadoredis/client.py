@@ -28,6 +28,7 @@ PY3 = sys.version > '3'
 
 
 class CmdLine(object):
+
     def __init__(self, cmd, *args, **kwargs):
         self.cmd = cmd
         self.args = args
@@ -220,8 +221,8 @@ REPLY_MAP = dict_merge(
 
 
 class Client(object):
-#    __slots__ = ('_io_loop', '_connection_pool', 'connection', 'subscribed',
-#                 'password', 'selected_db', '_pipeline', '_weak')
+    #    __slots__ = ('_io_loop', '_connection_pool', 'connection', 'subscribed',
+    #                 'password', 'selected_db', '_pipeline', '_weak')
 
     def __init__(self, host='localhost', port=6379, unix_socket_path=None,
                  password=None, selected_db=None, io_loop=None,
@@ -321,7 +322,7 @@ class Client(object):
             self.subscribed = set()
         raise ConnectionError("Socket closed on remote end")
 
-    #### connection
+    # connection
     def connect(self):
         if not self.connection.connected():
             pool = self._connection_pool
@@ -351,7 +352,7 @@ class Client(object):
         if callback:
             callback(False)
 
-    #### formatting
+    # formatting
     def encode(self, value):
         if not isinstance(value, str):
             if not PY3 and isinstance(value, unicode):
@@ -507,7 +508,7 @@ class Client(object):
 
         callback(tokens)
 
-    ### MAINTENANCE
+    # MAINTENANCE
     def bgrewriteaof(self, callback=None):
         self.execute_command('BGREWRITEAOF', callback=callback)
 
@@ -573,7 +574,7 @@ class Client(object):
         elif callback:
             callback(True)
 
-    ### BASIC KEY COMMANDS
+    # BASIC KEY COMMANDS
     def append(self, key, value, callback=None):
         self.execute_command('APPEND', key, value, callback=callback)
 
@@ -743,7 +744,7 @@ class Client(object):
         kwargs = {'callback': kwargs.get('callback', None)}
         self.execute_command('BITOP', operation, dest, *keys, **kwargs)
 
-    ### COUNTERS COMMANDS
+    # COUNTERS COMMANDS
     def incr(self, key, callback=None):
         self.execute_command('INCR', key, callback=callback)
 
@@ -759,7 +760,7 @@ class Client(object):
     def decrby(self, key, amount, callback=None):
         self.execute_command('DECRBY', key, amount, callback=callback)
 
-    ### LIST COMMANDS
+    # LIST COMMANDS
     def blpop(self, keys, timeout=0, callback=None):
         tokens = to_list(keys)
         tokens.append(timeout)
@@ -821,7 +822,7 @@ class Client(object):
     def rpoplpush(self, src, dst, callback=None):
         self.execute_command('RPOPLPUSH', src, dst, callback=callback)
 
-    ### SET COMMANDS
+    # SET COMMANDS
     def sadd(self, key, *values, **kwargs):
         callback = kwargs.get('callback', None)
         self.execute_command('SADD', key, *values, callback=callback)
@@ -869,7 +870,7 @@ class Client(object):
     def sdiffstore(self, keys, dst, callback=None):
         self.execute_command('SDIFFSTORE', dst, *keys, callback=callback)
 
-    ### SORTED SET COMMANDS
+    # SORTED SET COMMANDS
     def zadd(self, key, *score_value, **kwargs):
         callback = kwargs.get('callback', None)
         self.execute_command('ZADD', key, *score_value, callback=callback)
@@ -961,7 +962,7 @@ class Client(object):
             tokens.append(aggregate)
         self.execute_command(command, *tokens, callback=callback)
 
-    ### HASH COMMANDS
+    # HASH COMMANDS
     def hgetall(self, key, callback=None):
         self.execute_command('HGETALL', key, callback=callback)
 
@@ -1004,7 +1005,7 @@ class Client(object):
     def hvals(self, key, callback=None):
         self.execute_command('HVALS', key, callback=callback)
 
-    ### SCAN COMMANDS
+    # SCAN COMMANDS
     def scan(self, cursor, count=None, match=None, callback=None):
         self._scan('SCAN', cursor, count, match, callback)
 
@@ -1025,7 +1026,7 @@ class Client(object):
         count and tokens.extend(['COUNT', count])
         self.execute_command(*tokens, callback=callback)
 
-    ### PUBSUB
+    # PUBSUB
     def subscribe(self, channels, callback=None):
         self._subscribe('SUBSCRIBE', channels, callback=callback)
 
@@ -1166,7 +1167,7 @@ class Client(object):
         if exit_callback:
             exit_callback(bool(callback))
 
-    ### CAS
+    # CAS
     def watch(self, *key_names, **kwargs):
         callback = kwargs.get('callback', None)
         self.execute_command('WATCH', *key_names, callback=callback)
@@ -1174,7 +1175,7 @@ class Client(object):
     def unwatch(self, callback=None):
         self.execute_command('UNWATCH', callback=callback)
 
-    ### LOCKS
+    # LOCKS
     def lock(self, lock_name, lock_ttl=None, polling_interval=0.1):
         """
         Create a new Lock object using the Redis key ``lock_name`` for
@@ -1198,7 +1199,7 @@ class Client(object):
         """
         return Lock(self, lock_name, lock_ttl=lock_ttl, polling_interval=polling_interval)
 
-    ### SCRIPTING COMMANDS
+    # SCRIPTING COMMANDS
     def eval(self, script, keys=None, args=None, callback=None):
         if keys is None:
             keys = []
@@ -1352,6 +1353,7 @@ class Pipeline(Client):
             self.executing = False
 
         callback(results)
+
 
 class Lock(object):
     """

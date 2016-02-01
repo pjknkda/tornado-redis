@@ -11,6 +11,7 @@ from .redistest import RedisTestCase, async_test
 
 SCAN_BUF_SIZE = 200
 
+
 class ServerCommandsTestCase(RedisTestCase):
 
     def test_encode(self):
@@ -927,13 +928,13 @@ class ServerCommandsTestCase(RedisTestCase):
 
         yield gen.Task(self._make_list, 'gods', '12345678')
         res = yield gen.Task(self.client.sort, 'gods',
-                         start=2,
-                         num=4,
-                         by='user:*:username',
-                         get='user:*:favorite_drink',
-                         desc=True,
-                         alpha=True,
-                         store='sorted')
+                             start=2,
+                             num=4,
+                             by='user:*:username',
+                             get='user:*:favorite_drink',
+                             desc=True,
+                             alpha=True,
+                             store='sorted')
         self.assertEqual(res, 4)
         res = yield gen.Task(self.client.lrange, 'sorted', 0, -1)
         self.assertEqual(res, ['vodka', 'milk', 'gin', 'apple juice'])

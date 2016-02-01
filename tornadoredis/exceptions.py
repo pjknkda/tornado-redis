@@ -11,6 +11,7 @@ class ConnectionError(RedisError):
 
 
 class RequestError(RedisError):
+
     def __init__(self, message, cmd_line=None):
         self.message = message
         self.cmd_line = cmd_line
@@ -26,6 +27,7 @@ class RequestError(RedisError):
 
 
 class ResponseError(RedisError):
+
     def __init__(self, message, cmd_line=None):
         self.message = message
         self.cmd_line = cmd_line
@@ -43,7 +45,7 @@ class ResponseError(RedisError):
 class InvalidResponse(RedisError):
     pass
 
+
 class LockError(RedisError):
     "Errors thrown from the Lock"
     pass
-

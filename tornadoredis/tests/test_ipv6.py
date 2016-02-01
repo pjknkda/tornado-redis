@@ -2,6 +2,7 @@ from .redistest import RedisTestCase
 
 import tornadoredis
 
+
 class Ipv6ConnectionTestCase(RedisTestCase):
 
     def test_encode(self):

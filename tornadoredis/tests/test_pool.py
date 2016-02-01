@@ -124,7 +124,7 @@ class ConnectionPoolTestCase(RedisTestCase):
     def test_for_memory_leaks(self):
         @gen.engine
         def some_code(pool, on_client_destroy=None, callback=None):
-            c = self._new_client(pool=pool,on_destroy=on_client_destroy)
+            c = self._new_client(pool=pool, on_destroy=on_client_destroy)
             n = '%d' % randint(1, 1000)
             yield gen.Task(c.set, 'foo', n)
             n2 = yield gen.Task(c.get, 'foo')
@@ -183,7 +183,7 @@ class ConnectionPoolTestCase(RedisTestCase):
         yield gen.Task(c.select, 10)
         yield gen.Task(c.set, 'foo', foo_10)
 
-        n10 = yield gen.Task(c.get , 'foo')
+        n10 = yield gen.Task(c.get, 'foo')
         self.assertTrue(n10, foo_10)
         yield gen.Task(c.select, 9)
         n9 = yield gen.Task(c.get, 'foo')

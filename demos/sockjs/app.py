@@ -29,6 +29,7 @@ subscriber = tornadoredis.pubsub.SockJSSubscriber(tornadoredis.Client())
 
 
 class IndexPageHandler(tornado.web.RequestHandler):
+
     def get(self):
         self.render("template.html", title="PubSub + SockJS Demo")
 
@@ -65,6 +66,7 @@ class MessageHandler(sockjs.tornado.SockJSConnection):
     calls SockJSConnection.broadcast method to transfer messages
     to subscribed clients.
     """
+
     def _enter_leave_notification(self, msg_type):
         broadcasters = list(subscriber.subscribers['broadcast_channel'].keys())
         message = json.dumps({'type': msg_type,

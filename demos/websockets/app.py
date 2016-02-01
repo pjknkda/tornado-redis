@@ -13,11 +13,13 @@ c.connect()
 
 
 class MainHandler(tornado.web.RequestHandler):
+
     def get(self):
         self.render("template.html", title="PubSub + WebSocket Demo")
 
 
 class NewMessageHandler(tornado.web.RequestHandler):
+
     def post(self):
         message = self.get_argument('message')
         c.publish('test_channel', message)
@@ -26,6 +28,7 @@ class NewMessageHandler(tornado.web.RequestHandler):
 
 
 class MessageHandler(tornado.websocket.WebSocketHandler):
+
     def __init__(self, *args, **kwargs):
         super(MessageHandler, self).__init__(*args, **kwargs)
         self.listen()
